@@ -1,40 +1,32 @@
 #!/usr/bin/python3
-"""Island Perimeter"""
+"""0x0A-primegame"""
 
 
-def island_perimeter(grid):
-    """Return the perimeter of the island"""
-    count = 0
-    grid_max = len(grid) - 1
-    lst_max = len(grid[0]) - 1
+def primes(n):
+    """Return list of prime numbers"""
+    pri = []
+    sieve = [True] * (n + 1)
+    for p in range(2, n + 1):
+        if (sieve[p]):
+            pri.append(p)
+            for i in range(p, n + 1, p):
+                sieve[i] = False
+    return pri
 
-    for lst_idx, lst in enumerate(grid):
-        for land_idx, land in enumerate(lst):
-            if land == 1:
-                if land_idx == 0:
-                    count += 1
-                    if lst[land_idx + 1] == 0:
-                        count += 1
-                elif land_idx == lst_max:
-                    if lst[land_idx - 1] == 0:
-                        count += 1
-                    count += 1
-                else:
-                    if lst[land_idx - 1] == 0:
-                        count += 1
-                    if lst[land_idx + 1] == 0:
-                        count += 1
-                if lst_idx == 0:
-                    count += 1
-                    if grid[lst_idx + 1][land_idx] == 0:
-                        count += 1
-                elif lst_idx == grid_max:
-                    if grid[lst_idx - 1][land_idx] == 0:
-                        count += 1
-                    count += 1
-                else:
-                    if grid[lst_idx - 1][land_idx] == 0:
-                        count += 1
-                    if grid[lst_idx + 1][land_idx] == 0:
-                        count += 1
-    return count
+
+def isWinner(x, nums):
+    """determines winner of Prime Game"""
+    if x is None or nums is None or x == 0 or nums == []:
+        return None
+    Maria = Ben = 0
+    for i in range(x):
+        prime = primes(nums[i])
+        if len(prime) % 2 == 0:
+            Ben += 1
+        else:
+            Maria += 1
+    if Maria > Ben:
+        return 'Maria'
+    elif Ben > Maria:
+        return 'Ben'
+    return None
